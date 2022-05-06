@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "config:base",
+    ":ignoreModulesAndTests",
+    ":label(renovate)",
+    ":prConcurrentLimit10",
+    ":prNotPending"
+  ],
+  "npm": {
+    "extends": [
+      ":automergePatch",
+      ":noUnscheduledUpdates",
+      ":separatePatchReleases",
+      "npm:unpublishSafe",
+      "helpers:disableTypesNodeMajor",
+      "group:jestPlusTSJest",
+      "packages:eslint"
+    ],
+    "schedule": ["after 9pm", "before 9am"],
+    "rangeStrategy": "bump",
+    "postUpdateOptions": ["npmDedupe"],
+    "lockFileMaintenance": {
+      "enabled": true,
+      "schedule": ["before 3am on the first day of the month"]
+    },
+    "packageRules": [
+      {
+        "groupName": "jest monorepo",
+        "matchPackageNames": ["@types/jest"]
+      }
+    ]
+  }
+}
