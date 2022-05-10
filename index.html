@@ -4,10 +4,156 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla Web Template</title>
+
+    <!-- Primary Meta Tags -->
+    <title>Kieran Czerwinski</title>
+    <meta name="title" content="Kieran Czerwinski" />
+    <meta
+      name="description"
+      content="Loves semantic web, design systems, and micro-everything*"
+    />
+
+    <!-- Google / General Linked Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Person",
+        "name": "Kieran Czerwinski",
+        "email": "mailto:info@kicz.me",
+        "gender": "https://schema.org/Male",
+        "givenName": "Kieran",
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "Software Engineer"
+        },
+        "description": "Loves semantic web, design systems, and micro-everything*",
+        "url": "https://kicz.me"
+      }
+    </script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kicz.me/" />
+    <meta property="og:title" content="Kieran Czerwinski" />
+    <meta
+      property="og:description"
+      content="Loves semantic web, design systems, and micro-everything*"
+    />
+    <meta property="og:image" content="" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://kicz.me/" />
+    <meta property="twitter:title" content="Kieran Czerwinski" />
+    <meta
+      property="twitter:description"
+      content="Loves semantic web, design systems, and micro-everything*"
+    />
+    <meta property="twitter:image" content="" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css?family=Karla:400,700"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
   </head>
+
   <body>
-    <h1>Vanilla Web Template</h1>
+    <div class="clearfix">
+      <div class="right-container clearfix">
+        <div class="water"></div>
+        <div class="person"><img src="./assets/person.png" /></div>
+
+        <div class="image-text">
+          <h2 class="subtitle">Say hi!</h2>
+          <ul class="contact">
+            <li>
+              <a class="icon-button" href="mailto:info@kicz.me">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  width="24px"
+                  fill="#000000"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                  />
+                </svg>
+                <span class="visually-hidden">Email</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="icon-button"
+                href="https://github.com/kierancz"
+                target="_blank"
+              >
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  version="1.1"
+                  style="fill: #333"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"
+                  />
+                </svg>
+                <span class="visually-hidden">GitHub</span>
+              </a>
+            </li>
+          </ul>
+          <p>I don't bite!</p>
+        </div>
+      </div>
+
+      <div class="left-container clearfix">
+        <h1 class="heading">Kieran Czerwinski</h1>
+        <p>
+          Software mega nerd (read software engineer) experienced using design,
+          development, and people skills to lead and build scalable
+          cross-platform (web, ios, and android) design systems for
+          billion-dollar companies and teams distributed across the globe, as
+          well as regularly mentoring others in test-driven development of
+          full-stack features from micro-services to accessible micro-frontends.
+        </p>
+
+        <figure class="interests">
+          <figcaption>Interests:</figcaption>
+          <ul>
+            <li>semantic web</li>
+            <li>design systems</li>
+            <li>micro-everything*</li>
+            <li>object-oriented ontology</li>
+            <li>photography</li>
+            <li>bikes and hikes!</li>
+          </ul>
+        </figure>
+      </div>
+    </div>
+    <svg height="50px" width="50px" id="water-svg">
+      <defs>
+        <clipPath id="clip-water">
+          <path
+            d="M521.4,144.6c-3.9-4.8-9.2-8.1-14.6-10.8c-46.1-23.6-100.1-17.9-150.7-26.4c-10.6-1.8-21.3-4.3-30.3-10.2
+      c-10.5-6.9-17.9-17.8-26.7-26.9c-20.9-21.8-49.3-33.6-77.4-42.9C187.9,16.2,153.3,8.1,118.3,2.7C98-0.5,76.6-2.5,57.9,6.3
+      s-32.7,32-25.3,52.1c2.1,5.8,5.5,12.8,4.9,18.2c-23.1,10.9-40.7,37-37,63.9c4.3,31.9,31.3,54.7,58.2,69.7
+      c41.8,23.4,88.8,36.4,136.1,37.7c30.8,0.9,66-1.5,87.7,21.7c6.9,7.4,11.6,16.8,18.4,24.3c16.1,17.8,41.3,22.5,64.6,22.9
+      c41.5,0.7,84.2-9.8,117-36.6c32.8-26.8,53.7-71.6,46.8-114.8C528.1,158,526,150.4,521.4,144.6z"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+
     <script type="module" src="/main.js"></script>
   </body>
 </html>

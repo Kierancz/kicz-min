@@ -1,12 +1,8 @@
-# Vanilla Web Template
+# Kicz.me
 
-A very bare bones HTML/CSS/JS boilerplate.
+A very bare bones personal website with some cool css.
 
-## Requirements
-
-- [Node.js](https://nodejs.org/)
-
-## Setup
+## Install
 
 `npm install`
 

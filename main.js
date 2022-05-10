@@ -1,1 +1,1 @@
-console.log(`Vanilla Web Boilerplate`);
+console.log(`Hi there!`);
