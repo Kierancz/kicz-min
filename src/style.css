@@ -71,28 +71,28 @@ h6 {
 
 h1 {
   text-transform: lowercase;
-  margin: 48px 0;
   letter-spacing: -6px;
-  font-size: 120px;
   line-height: 80%;
   color: #9dc5fd;
-  margin-top: 72px;
 }
-@media (max-width: 750px) {
-  h1 {
-    font-size: 70px;
-    margin: 32px 0;
-  }
+.heading {
+  font-size: 14vh;
+  height: 24vh;
+  margin: 0;
+  margin-top: 4vh;
 }
-@media (max-width: 600px) {
-  h1 {
-    font-size: 60px;
-    margin: 32px 0;
-  }
+.left-text-container {
+  height: 66vh;
+  overflow-y: scroll;
 }
 @media (max-width: 500px) {
-  h1 {
-    font-size: 52px;
+  .heading {
+    font-size: 10vh;
+    height: 20vh;
+  }
+  .left-text-container {
+    height: 74vh;
+    overflow-y: scroll;
   }
 }
 
@@ -162,7 +162,7 @@ h2.subtitle {
   width: 40vw;
   -webkit-clip-path: url(#clip-water);
   clip-path: url(#clip-water);
-  background-image: url(./assets/underwater.jpg);
+  background-image: url(../assets/underwater.jpg);
   shape-outside: url(#clip-water);
   height: 320px;
   background-attachment: fixed;
