@@ -49,6 +49,7 @@ body {
 
 p,
 a {
+  font-size: 1rem;
   line-height: 150%;
   color: #000;
 }
@@ -84,6 +85,15 @@ h1 {
 .left-text-container {
   height: 66vh;
   overflow-y: scroll;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.left-text-container::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.left-text-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 @media (max-width: 500px) {
   .heading {
@@ -139,12 +149,12 @@ h2.subtitle {
 .right-container::before {
   content: "";
   position: absolute;
-  width: 100%;
+  width: 110%;
   height: 100%;
   background: linear-gradient(90deg, #bde9ff, rgb(70, 70, 243));
   -webkit-clip-path: url(#clip-water);
   clip-path: url(#clip-water);
-  bottom: -100px;
+  bottom: -30vh;
   left: -10px;
 }
 
@@ -169,7 +179,7 @@ h2.subtitle {
   background-size: 100%;
   background-position-x: 0;
   display: inline-block;
-  bottom: -90px;
+  bottom: -29vh;
   right: 0px;
   background-color: #818dd5;
   background-blend-mode: overlay;
@@ -178,7 +188,7 @@ h2.subtitle {
 
 .person {
   position: absolute;
-  top: 34px;
+  top: 20vh;
   left: 0px;
 }
 .person img {
