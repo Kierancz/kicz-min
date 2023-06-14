@@ -45,7 +45,7 @@ a {
 .filter-container {
   width: 100%;
   height: 100%;
-  filter: blur(32px) contrast(30);
+  filter: blur(32px) contrast(160);
   background: #fff;
 }
 
