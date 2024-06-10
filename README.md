@@ -1,6 +1,6 @@
 # Kicz.me
 
-A very bare bones personal website with some cool css.
+A bare bones personal website with some cool css.
 
 ## Install
 
