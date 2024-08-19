@@ -54,13 +54,14 @@ a {
 }
 
 .content {
-  width: 90vw;
+  width: 66vw;
   height: 90vh;
+  max-width: 700px;
   max-height: 500px;
 }
 
 .content-text {
-  padding: 16px 36px;
+  padding: 8px 48px;
   overflow-y: scroll;
 }
 
@@ -83,10 +84,10 @@ a {
 .g-ball-b {
   position: absolute;
   width: 160px;
-  height: 160px;
+  height: 180px;
   border-radius: 50%;
   background: blue;
-  bottom: 30px;
+  bottom: -16px;
   right: -40px;
   animation: filterBallMove2 4s ease-out infinite;
 }
@@ -99,7 +100,8 @@ a {
 
 @keyframes filterBallMove2 {
   50% {
-    right: 20px;
+    right: -8px;
+    bottom: 20px;
   }
 }
 
@@ -109,7 +111,7 @@ a {
 }
 
 .header {
-  font-size: 60px;
+  font-size: 48px;
 }
 
 .description {
@@ -120,43 +122,72 @@ a {
   font-size: 20px;
   margin: 0;
 }
+.contact {
+  position: absolute;
+  bottom: 32px;
+  right: 48px;
+  color: white;
+  list-style-type: none;
+}
 
 @media (max-width: 900px) {
   .header {
-    font-size: 50px;
+    font-size: 40px;
   }
-
-  .interests {
-    font-size: 16px;
+  .content {
+    width: 72vw;
   }
 }
 
 @media (max-width: 700px) {
+  .content-text {
+    padding: 16px 24px;
+  }
   .header {
-    font-size: 40px;
+    font-size: 36px;
+  }
+  .interests {
+    font-size: 18px;
+  }
+  .contact {
+    bottom: 16px;
+    right: 24px;
+  }
+  .content {
+    width: 80vw;
+  }
+  @keyframes filterBallMove {
+    50% {
+      left: -16px;
+    }
+  }
+  
+  .g-ball-b {
+    bottom: -16px;
+    right: 0px;
+  }
+  @keyframes filterBallMove2 {
+    50% {
+      right: -16px;
+      bottom: 32px;
+    }
   }
 }
 
 @media (max-width: 500px) {
   .header {
-    font-size: 30px;
+    font-size: 32px;
   }
-
   .description {
     font-size: 18px;
   }
-
-  .content-text {
-    padding: 22px;
+  .interests {
+    font-size: 16px;
   }
-}
-
-.contact {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  color: white;
-  list-style-type: none;
+  .contact {
+    bottom: 16px;
+    right: 16px;
+  }
 }
 
 .icon-button {
