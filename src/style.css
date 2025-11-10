@@ -44,6 +44,11 @@ a {
   filter: blur(32px) contrast(160);
   background: #fff;
 }
+@supports (font: -apple-system-body) { 
+  .filter-container {
+    filter: blur(20px) contrast(10);
+  } 
+}
 
 .cursor {
   width: 100px;
@@ -89,7 +94,7 @@ a {
   background: blue;
   bottom: -16px;
   right: -40px;
-  animation: filterBallMove2 4s ease-out infinite;
+  animation: filterBallMove2 2s ease-out infinite;
 }
 
 @keyframes filterBallMove {
