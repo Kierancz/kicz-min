@@ -43,6 +43,7 @@ a {
   height: 100%;
   filter: blur(32px) contrast(160);
   background: #fff;
+  position: relative;
 }
 @supports (font: -apple-system-body) { 
   .filter-container {
@@ -50,12 +51,16 @@ a {
   } 
 }
 
-.cursor {
+.blob {
   width: 100px;
   height: 100px;
   background: blue;
   border: 2px solid red;
   border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
 }
 
 .content {
@@ -82,7 +87,7 @@ a {
   background: blue;
   border-radius: 50%;
   top: -40px;
-  left: 120px;
+  left: 100px;
   animation: filterBallMove 4s ease-out infinite;
 }
 
@@ -94,12 +99,13 @@ a {
   background: blue;
   bottom: -16px;
   right: -40px;
-  animation: filterBallMove2 2s ease-out infinite;
+  animation: filterBallMove2 3s ease-out infinite;
 }
 
 @keyframes filterBallMove {
   50% {
-    left: -40px;
+    left: -30px;
+    top: -20px;
   }
 }
 
