@@ -72,7 +72,7 @@ a {
 
 .content-text {
   padding: 16px 48px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .block {
