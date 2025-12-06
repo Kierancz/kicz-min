@@ -9,7 +9,7 @@
     "lint": "npx prettier --write ."
   },
   "devDependencies": {
-    "prettier": "2.7.1",
+    "prettier": "3.7.4",
     "vite": "^6.3.3"
   }
 }
