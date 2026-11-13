@@ -17,12 +17,14 @@ precision highp float;
 #else
 precision mediump float;
 #endif
+#define RESIDENTS 2
+#define RIM_WIDTH 3.
 uniform vec2 uRes;
 uniform float uDpr, uGoo, uRadius;
 uniform vec4 uBox;                 // card: center.xy, half-size.zw
 uniform vec4 uBlobs[${MAX_BLOBS}]; // blob: center.xy, radii.zw
 uniform int uCount;
-uniform vec3 uBlob, uCard;
+uniform vec3 uBlob, uCard, uRim;
 
 float smin(float a, float b, float k){ float h = max(k - abs(a - b), 0.) / k; return min(a, b) - h * h * k * .25; }
 float smax(float a, float b, float k){ return -smin(-a, -b, k); }
@@ -47,11 +49,13 @@ void main(){
   vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
   float box = sdBox(p - uBox.xy, uBox.zw, uRadius);
   float blobs = 1e4;
+  float pressed = 1e4; // only the blobs made by pressing; the residents come first
   for(int i = 0; i < ${MAX_BLOBS}; i++){
     if(i >= uCount) break;
     vec4 b = uBlobs[i];
     float d = (length((p - b.xy) / b.zw) - 1.) * min(b.z, b.w);
     blobs = smin(blobs, d, uGoo);
+    if(i >= RESIDENTS) pressed = smin(pressed, d, uGoo);
   }
   float shape = smin(box, blobs, uGoo);  // whole silhouette: card fused with blobs
   // The card with the blobs melted out of it. The wider blend dissolves thin
@@ -60,6 +64,10 @@ void main(){
   float a = cover(shape, 0.);
   // Nudged out a pixel so no blob color fringes the card's own outer edge.
   vec3 col = mix(uBlob, uCard, cover(card, 1.));
+  // Pressed blobs carry a thin magenta outline (the old red border, as the
+  // blur used to tint it), fading out where they fuse into something else.
+  float rim = cover(-(shape + RIM_WIDTH), 0.) * smoothstep(uGoo * .4, 0., pressed - shape);
+  col = mix(col, uRim, rim);
   gl_FragColor = vec4(col * a, a);
 }`;
 
@@ -127,6 +135,7 @@ const start = () => {
   };
   gl.uniform3f(u('uBlob'), 0, 0, 1);
   gl.uniform3f(u('uCard'), 0, 0, 0);
+  gl.uniform3f(u('uRim'), 1, 0, 1);
   gl.uniform1f(u('uGoo'), GOO);
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
