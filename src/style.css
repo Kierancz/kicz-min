@@ -38,29 +38,14 @@ a {
   color: rgb(165, 255, 165);
 }
 
-.filter-container {
+/* Full-viewport WebGL layer that draws the card and its blobs (see main.js). */
+.goo {
+  position: fixed;
+  inset: 0;
   width: 100%;
   height: 100%;
-  filter: blur(32px) contrast(160);
-  background: #fff;
-  position: relative;
-}
-@supports (font: -apple-system-body) { 
-  .filter-container {
-    filter: blur(20px) contrast(10);
-  } 
-}
-
-.blob {
-  width: 100px;
-  height: 100px;
-  background: blue;
-  border: 2px solid red;
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  will-change: transform;
+  display: block;
+  pointer-events: none;
 }
 
 .content {
@@ -75,45 +60,15 @@ a {
   overflow-y: auto;
 }
 
-.block {
+/* Plain card: what shows if WebGL is unavailable. With .goo-on the canvas
+   paints it instead, reading this element's box and corner radius. */
+.card {
   background: #000;
   border-radius: 20px;
 }
 
-.g-ball-a {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: blue;
-  border-radius: 50%;
-  top: -40px;
-  left: 100px;
-  animation: filterBallMove 4s ease-out infinite;
-}
-
-.g-ball-b {
-  position: absolute;
-  width: 160px;
-  height: 180px;
-  border-radius: 50%;
-  background: blue;
-  bottom: -16px;
-  right: -40px;
-  animation: filterBallMove2 3s ease-out infinite;
-}
-
-@keyframes filterBallMove {
-  50% {
-    left: -30px;
-    top: -20px;
-  }
-}
-
-@keyframes filterBallMove2 {
-  50% {
-    right: -8px;
-    bottom: 20px;
-  }
+.goo-on .card {
+  background: transparent;
 }
 
 .text {
@@ -166,22 +121,6 @@ a {
   }
   .content {
     width: 80vw;
-  }
-  @keyframes filterBallMove {
-    50% {
-      left: -16px;
-    }
-  }
-  
-  .g-ball-b {
-    bottom: -16px;
-    right: 0px;
-  }
-  @keyframes filterBallMove2 {
-    50% {
-      right: -16px;
-      bottom: 32px;
-    }
   }
 }
 
