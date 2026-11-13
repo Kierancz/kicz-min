@@ -4,9 +4,11 @@
 // one-pixel antialiased threshold, so edges stay crisp in every engine instead
 // of depending on a CSS blur + contrast filter.
 
-const MAX_BLOBS = 32;
+const MAX_BLOBS = 48;
 const GOO = 44; // how far apart two shapes start reaching for each other, in px
-const PRESS_RADIUS = 50;
+const PRESS_START = 16; // a pressed blob starts as a small drop...
+const PRESS_MAX = 110; // ...and swells to this while held
+const PRESS_GROWTH = 55; // px of radius per second
 
 const VERT = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }`;
 
@@ -54,8 +56,11 @@ void main(){
     if(i >= uCount) break;
     vec4 b = uBlobs[i];
     float d = (length((p - b.xy) / b.zw) - 1.) * min(b.z, b.w);
-    blobs = smin(blobs, d, uGoo);
-    if(i >= RESIDENTS) pressed = smin(pressed, d, uGoo);
+    // Pressed drops join each other more tightly, so a dragged trail of them
+    // stays a line instead of swelling into one mass.
+    float k = i >= RESIDENTS ? uGoo * .35 : uGoo;
+    blobs = smin(blobs, d, k);
+    if(i >= RESIDENTS) pressed = smin(pressed, d, k);
   }
   float shape = smin(box, blobs, uGoo);  // whole silhouette: card fused with blobs
   // The card with the blobs melted out of it. The wider blend dissolves thin
@@ -139,7 +144,9 @@ const start = () => {
   gl.uniform1f(u('uGoo'), GOO);
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const pressed = []; // { x, y, born }
+  const pressed = []; // { x, y, r, born }
+  const held = new Map(); // pointerId -> the blob that pointer is feeding
+  let last = 0;
   const data = new Float32Array(MAX_BLOBS * 4);
   let dpr = 1;
   let queued = false;
@@ -162,13 +169,16 @@ const start = () => {
     const view = canvas.getBoundingClientRect();
     const box = card.getBoundingClientRect();
     const blobs = residents(box, t);
-    let settling = false;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    for (const b of held.values()) b.r = Math.min(b.r + PRESS_GROWTH * dt, PRESS_MAX);
+    let settling = held.size > 0;
     for (const b of pressed) {
       // pop in with a little overshoot, like a drop landing
       const age = reduced.matches ? 9 : (now - b.born) / 1000;
       if (age < 1.2) settling = true;
       const s = Math.max(1 - Math.exp(-7 * age) * Math.cos(11 * age), 0.02);
-      blobs.push([b.x, b.y, PRESS_RADIUS * s, PRESS_RADIUS * s]);
+      blobs.push([b.x, b.y, b.r * s, b.r * s]);
     }
     blobs.forEach((b, i) => data.set([b[0] - view.left, b[1] - view.top, b[2], b[3]], i * 4));
 
@@ -197,12 +207,38 @@ const start = () => {
     }
   };
 
-  window.addEventListener('pointerdown', (e) => {
-    pressed.push({ x: e.clientX, y: e.clientY, born: performance.now() });
+  const drop = (e) => {
+    const b = { x: e.clientX, y: e.clientY, r: PRESS_START, born: performance.now() };
+    pressed.push(b);
     if (pressed.length > MAX_BLOBS - 2) pressed.shift();
+    held.set(e.pointerId, b);
+    last = performance.now();
     request();
+  };
+  const release = (e) => {
+    held.delete(e.pointerId);
+    if (!held.size) document.documentElement.classList.remove('drawing');
+  };
+  // Press to place a drop, hold to swell it, drag to leave a trail of drops.
+  window.addEventListener('pointerdown', (e) => {
+    document.documentElement.classList.add('drawing');
+    drop(e);
   });
-  window.addEventListener('resize', request);
+  window.addEventListener('pointermove', (e) => {
+    const b = held.get(e.pointerId);
+    if (b && Math.hypot(e.clientX - b.x, e.clientY - b.y) > Math.max(b.r * 0.8, 12)) drop(e);
+  });
+  window.addEventListener('pointerup', release);
+  window.addEventListener('pointercancel', release);
+
+  // Let a finger draw instead of scrolling, unless the card's text really
+  // needs to scroll, in which case vertical drags over it still do.
+  const touch = () => {
+    card.style.touchAction = card.scrollHeight > card.clientHeight + 1 ? 'pan-y' : 'none';
+    request();
+  };
+  window.addEventListener('resize', touch);
+  touch();
   reduced.addEventListener('change', request);
 
   // The canvas now paints the card; drop its CSS fallback background.

@@ -32,6 +32,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   overflow: hidden;
+  touch-action: none;
+}
+
+/* While a pointer is down drawing blobs, don't select the text under it. */
+.drawing body {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 a {
