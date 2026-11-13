@@ -35,32 +35,31 @@ float sdBox(vec2 p, vec2 b, float r){
   return length(max(q, 0.)) + min(max(q.x, q.y), 0.) - r;
 }
 
-// Coverage of the pixel by the region d < 0, one device pixel wide. Blended
-// fields are flatter than true distances, so the edge is scaled by the field's
-// own slope where the extension allows; that keeps necks as crisp as straights.
-float cover(float d, float grow){
+// How fast a field changes per device pixel. Blended fields are flatter than
+// true distances, so edges are measured against the field's own slope where
+// the extension allows; that keeps necks as crisp as straights.
+float slope(float d){
 #ifdef GL_OES_standard_derivatives
-  float g = max(length(vec2(dFdx(d), dFdy(d))), 1e-4);
+  return max(length(vec2(dFdx(d), dFdy(d))), 1e-4);
 #else
-  float g = 1. / uDpr;
+  return 1. / uDpr;
 #endif
-  return clamp(.5 + grow - d / g, 0., 1.);
 }
+// Coverage of the pixel by the region d < 0, grown outward by some pixels.
+float cover(float d, float grow){ return clamp(.5 + grow - d / slope(d), 0., 1.); }
 
 void main(){
   vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
   float box = sdBox(p - uBox.xy, uBox.zw, uRadius);
   float blobs = 1e4;
-  float pressed = 1e4; // only the blobs made by pressing; the residents come first
   for(int i = 0; i < ${MAX_BLOBS}; i++){
     if(i >= uCount) break;
     vec4 b = uBlobs[i];
     float d = (length((p - b.xy) / b.zw) - 1.) * min(b.z, b.w);
-    // Pressed drops join each other more tightly, so a dragged trail of them
+    // Pressed drops (the residents come first) join each other more tightly, so a dragged trail of them
     // stays a line instead of swelling into one mass.
     float k = i >= RESIDENTS ? uGoo * .35 : uGoo;
     blobs = smin(blobs, d, k);
-    if(i >= RESIDENTS) pressed = smin(pressed, d, k);
   }
   float shape = smin(box, blobs, uGoo);  // whole silhouette: card fused with blobs
   // The card with the blobs melted out of it. The wider blend dissolves thin
@@ -68,11 +67,13 @@ void main(){
   float card = smax(box, -blobs, uGoo * 1.8);
   float a = cover(shape, 0.);
   // Nudged out a pixel so no blob color fringes the card's own outer edge.
-  vec3 col = mix(uBlob, uCard, cover(card, 1.));
-  // Pressed blobs carry a thin magenta outline (the old red border, as the
-  // blur used to tint it), fading out where they fuse into something else.
-  float rim = cover(-(shape + RIM_WIDTH), 0.) * smoothstep(uGoo * .4, 0., pressed - shape);
-  col = mix(col, uRim, rim);
+  float ink = cover(card, 1.);
+  // A thin magenta outline wherever blue meets the page. The card's own edge
+  // and the blue-on-card boundaries inside the shape stay bare, and it is
+  // skipped where only a hairline of blue shows past the card's edge.
+  float rim = clamp(.5 + shape / slope(shape) + RIM_WIDTH * uDpr, 0., 1.)
+    * (1. - ink) * smoothstep(1., 5., card);
+  vec3 col = mix(mix(uBlob, uRim, rim), uCard, ink);
   gl_FragColor = vec4(col * a, a);
 }`;
 
